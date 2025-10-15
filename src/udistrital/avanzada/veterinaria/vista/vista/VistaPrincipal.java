@@ -26,8 +26,8 @@ import udistrital.avanzada.veterinaria.modelo.modelo.MascotaVO;
  * No contiene lógica de negocio, solo componentes visuales y captura de eventos.
  * Sigue el patrón MVC como vista pura sin lógica de aplicación.
  * 
- * @author Estudiantes - Universidad Distrital Francisco José de Caldas
- * @version 1.0
+ * @author AndGar03, SanSantax
+ * @version 2.0
  * @since 2024
  */
 public class VistaPrincipal extends JFrame {
@@ -94,13 +94,13 @@ public class VistaPrincipal extends JFrame {
         panelCentral.add(crearPanelTabla(), BorderLayout.CENTER);
         panelPrincipal.add(panelCentral, BorderLayout.CENTER);
 
-        // Panel inferior con botones
+        // Panel inferior compuesto: botones (arriba) + estado (abajo)
         JPanel panelBotones = crearPanelBotones();
-        panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
-
-        // Panel de estado
         JPanel panelEstado = crearPanelEstado();
-        panelPrincipal.add(panelEstado, BorderLayout.SOUTH);
+        JPanel panelSur = new JPanel(new BorderLayout());
+        panelSur.add(panelBotones, BorderLayout.NORTH);
+        panelSur.add(panelEstado, BorderLayout.SOUTH);
+        panelPrincipal.add(panelSur, BorderLayout.SOUTH);
 
         add(panelPrincipal);
     }

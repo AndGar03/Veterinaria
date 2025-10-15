@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class Conexion {
 
     private static Connection cn = null;
-    private static String URLBD = "jdbc:mysql://localhost:3307/colegio";
+    private static String URLBD = "jdbc:mysql://localhost:3307/veterinaria_exotica";
     private static String usuario = "root";
     private static String contrasena = "";
 
@@ -15,7 +15,7 @@ public class Conexion {
         try {
 cn = DriverManager.getConnection(URLBD, usuario, contrasena);
         } catch (SQLException ex) {
-            System.out.println("No se puede cargar el controlado");
+            System.out.println("No se pudo establecer conexión con la base de datos: " + ex.getMessage());
         }
         return cn;
     }

@@ -14,8 +14,8 @@ import udistrital.avanzada.veterinaria.modelo.modelo.MascotaVO;
  * de interacción entre la vista y el modelo. Implementa el patrón MVC como
  * controlador desacoplado de la vista y el modelo.
  * 
- * @author Estudiantes - Universidad Distrital Francisco José de Caldas
- * @version 1.0
+ * @author AndGar03, SanSantax
+ * @version 2.0
  * @since 2024
  */
 public class ControladorVistaPrincipal {

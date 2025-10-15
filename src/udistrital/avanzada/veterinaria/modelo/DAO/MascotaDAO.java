@@ -13,8 +13,8 @@ import udistrital.avanzada.veterinaria.modelo.modelo.MascotaVO;
  * de mascotas exóticas en la base de datos.
  * Implementa el patrón DAO para separar la lógica de acceso a datos.
  * 
- * @author Estudiantes - Universidad Distrital Francisco José de Caldas
- * @version 1.0
+ * @author AndGar03, SanSantax
+ * @version 2.0
  * @since 2024
  */
 public class MascotaDAO {
@@ -43,6 +43,7 @@ public class MascotaDAO {
         String insercion = "INSERT INTO mascotas (id_mascota, apodo, clasificacion, familia, genero, especie, tipo_alimento, edad, peso, observaciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             con = Conexion.getConexion();
+            if (con == null) return false;
             ps = con.prepareStatement(insercion);
             ps.setString(1, mascota.getIdMascota());
             ps.setString(2, mascota.getApodo());
@@ -75,6 +76,7 @@ public class MascotaDAO {
         String consulta = "SELECT * FROM mascotas WHERE id_mascota = ?";
         try {
             con = Conexion.getConexion();
+            if (con == null) return null;
             ps = con.prepareStatement(consulta);
             ps.setString(1, idMascota);
             rs = ps.executeQuery();
@@ -111,6 +113,7 @@ public class MascotaDAO {
         String consulta = "SELECT * FROM mascotas WHERE apodo LIKE ?";
         try {
             con = Conexion.getConexion();
+            if (con == null) return mascotas;
             ps = con.prepareStatement(consulta);
             ps.setString(1, "%" + apodo + "%");
             rs = ps.executeQuery();
@@ -148,6 +151,7 @@ public class MascotaDAO {
         String consulta = "SELECT * FROM mascotas WHERE clasificacion = ?";
         try {
             con = Conexion.getConexion();
+            if (con == null) return mascotas;
             ps = con.prepareStatement(consulta);
             ps.setString(1, clasificacion);
             rs = ps.executeQuery();
@@ -185,6 +189,7 @@ public class MascotaDAO {
         String consulta = "SELECT * FROM mascotas WHERE familia = ?";
         try {
             con = Conexion.getConexion();
+            if (con == null) return mascotas;
             ps = con.prepareStatement(consulta);
             ps.setString(1, familia);
             rs = ps.executeQuery();
@@ -222,6 +227,7 @@ public class MascotaDAO {
         String consulta = "SELECT * FROM mascotas WHERE tipo_alimento = ?";
         try {
             con = Conexion.getConexion();
+            if (con == null) return mascotas;
             ps = con.prepareStatement(consulta);
             ps.setString(1, tipoAlimento);
             rs = ps.executeQuery();
@@ -258,6 +264,7 @@ public class MascotaDAO {
         String consulta = "SELECT * FROM mascotas ORDER BY apodo";
         try {
             con = Conexion.getConexion();
+            if (con == null) return mascotas;
             ps = con.prepareStatement(consulta);
             rs = ps.executeQuery();
             
@@ -294,6 +301,7 @@ public class MascotaDAO {
         String actualizacion = "UPDATE mascotas SET apodo = ?, clasificacion = ?, tipo_alimento = ?, edad = ?, peso = ?, observaciones = ? WHERE id_mascota = ?";
         try {
             con = Conexion.getConexion();
+            if (con == null) return false;
             ps = con.prepareStatement(actualizacion);
             ps.setString(1, mascota.getApodo());
             ps.setString(2, mascota.getClasificacion());
@@ -322,6 +330,7 @@ public class MascotaDAO {
         String eliminacion = "DELETE FROM mascotas WHERE id_mascota = ?";
         try {
             con = Conexion.getConexion();
+            if (con == null) return false;
             ps = con.prepareStatement(eliminacion);
             ps.setString(1, idMascota);
             
@@ -344,6 +353,7 @@ public class MascotaDAO {
         String consulta = "SELECT COUNT(*) FROM mascotas WHERE id_mascota = ?";
         try {
             con = Conexion.getConexion();
+            if (con == null) return false;
             ps = con.prepareStatement(consulta);
             ps.setString(1, idMascota);
             rs = ps.executeQuery();

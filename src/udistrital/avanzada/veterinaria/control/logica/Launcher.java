@@ -7,8 +7,8 @@ import udistrital.avanzada.veterinaria.vista.vista.VistaPrincipal;
  * Clase Launcher que inicia la aplicación de gestión de mascotas exóticas.
  * Esta clase no debe ser modificada según los requerimientos del proyecto.
  * 
- * @author Estudiantes - Universidad Distrital Francisco José de Caldas
- * @version 1.0
+ * @author AndGar03, SanSantax
+ * @version 2.0
  * @since 2024
  */
 public class Launcher {

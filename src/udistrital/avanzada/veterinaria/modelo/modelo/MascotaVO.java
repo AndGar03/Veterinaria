@@ -6,8 +6,8 @@ import java.io.Serializable;
  * Clase que representa una mascota exótica en el sistema veterinario.
  * Implementa Serializable para permitir la serialización de objetos.
  * 
- * @author Estudiantes - Universidad Distrital Francisco José de Caldas
- * @version 1.0
+ * @author AndGar03, SanSantax
+ * @version 2.0
  * @since 2024
  */
 public class MascotaVO implements Serializable {
