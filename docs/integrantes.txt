@@ -1,0 +1,14 @@
+INTEGRANTES DEL GRUPO
+=====================
+
+Proyecto: Sistema de Gestión de Mascotas Exóticas
+Materia: Programación Avanzada - Primer Parcial
+Universidad: Distrital Francisco José de Caldas
+
+Integrantes:
+- [Nombre del Estudiante 1] - [Código]
+- [Nombre del Estudiante 2] - [Código]
+- [Nombre del Estudiante 3] - [Código]
+
+Fecha: [Fecha de entrega]
+Profesor: [Nombre del profesor]
