@@ -1,0 +1,281 @@
+@startuml DiagramaClasesVeterinaria
+!theme plain
+title Sistema de Gestión de Mascotas Exóticas - Diagrama de Clases
+
+' Definir paquetes
+package "udistrital.avanzada.veterinaria.modelo" {
+    enum Clasificacion {
+        REPTIL
+        MAMIFERO
+        AVE
+        ANFIBIO
+        PEZ
+        INVERTEBRADO
+    }
+    
+    enum TipoAlimento {
+        LACTEOS
+        CARNES
+        VERDURAS
+        FRUTAS
+        FORRAJES
+        CEREALES
+        LEGUMINOSAS
+        OMNIVORO
+    }
+    
+    class Mascota {
+        -String nombreComun
+        -String apodo
+        -Clasificacion clasificacion
+        -String familia
+        -String genero
+        -String especie
+        -TipoAlimento tipoAlimentoPrincipal
+        +Mascota()
+        +Mascota(String, String, Clasificacion, String, String, String, TipoAlimento)
+        +getNombreComun() : String
+        +setNombreComun(String) : void
+        +getApodo() : String
+        +setApodo(String) : void
+        +getClasificacion() : Clasificacion
+        +setClasificacion(Clasificacion) : void
+        +getFamilia() : String
+        +setFamilia(String) : void
+        +getGenero() : String
+        +setGenero(String) : void
+        +getEspecie() : String
+        +setEspecie(String) : void
+        +getTipoAlimentoPrincipal() : TipoAlimento
+        +setTipoAlimentoPrincipal(TipoAlimento) : void
+        +equals(Object) : boolean
+        +hashCode() : int
+        +toString() : String
+    }
+}
+
+package "udistrital.avanzada.veterinaria.modelo" {
+    class ConexionBD {
+        -ConexionBD instancia
+        -Connection conexion
+        -String URL_BD
+        -ConexionBD()
+        +getInstance() : ConexionBD
+        +getConnection() : Connection
+        -inicializarBaseDatos() : void
+        -crearTablaMascotas() : void
+        +cerrarConexion() : void
+    }
+    
+    interface MascotaDAO {
+        +agregarMascota(Mascota) : void
+        +consultarPorApodo(String) : Mascota
+        +consultarPorClasificacion(Clasificacion) : List<Mascota>
+        +consultarPorFamilia(String) : List<Mascota>
+        +consultarPorTipoAlimento(TipoAlimento) : List<Mascota>
+        +obtenerTodasLasMascotas() : List<Mascota>
+        +modificarMascota(Mascota) : void
+        +eliminarMascota(String) : void
+        +existeMascota(Mascota) : boolean
+    }
+    
+    class MascotaDAOImpl {
+        -ConexionBD conexionBD
+        +MascotaDAOImpl()
+        +agregarMascota(Mascota) : void
+        +consultarPorApodo(String) : Mascota
+        +consultarPorClasificacion(Clasificacion) : List<Mascota>
+        +consultarPorFamilia(String) : List<Mascota>
+        +consultarPorTipoAlimento(TipoAlimento) : List<Mascota>
+        +obtenerTodasLasMascotas() : List<Mascota>
+        +modificarMascota(Mascota) : void
+        +eliminarMascota(String) : void
+        +existeMascota(Mascota) : boolean
+        -mapearResultSetAMascota(ResultSet) : Mascota
+    }
+    
+    class ServicioMascota {
+        -MascotaDAO mascotaDAO
+        -String ARCHIVO_MASCOTAS
+        +ServicioMascota(MascotaDAO)
+        +cargarMascotasDesdeArchivo() : List<Mascota>
+        +procesarMascotasIncompletas(List<Mascota>) : List<Mascota>
+        +insertarMascotasEnBD(List<Mascota>) : int
+        +tieneDatosIncompletos(Mascota) : boolean
+        -parsearLineaMascota(String, String) : Mascota
+        -crearMascotaIncompleta(String[]) : Mascota
+    }
+}
+
+package "udistrital.avanzada.veterinaria.vista" {
+    class VentanaPrincipal {
+        -JTextField txtNombreComun
+        -JTextField txtApodo
+        -JComboBox<Clasificacion> cmbClasificacion
+        -JTextField txtFamilia
+        -JTextField txtGenero
+        -JTextField txtEspecie
+        -JComboBox<TipoAlimento> cmbTipoAlimento
+        -JTextField txtConsultaApodo
+        -JComboBox<Clasificacion> cmbConsultaClasificacion
+        -JTextField txtConsultaFamilia
+        -JComboBox<TipoAlimento> cmbConsultaTipoAlimento
+        -JButton btnAdicionar
+        -JButton btnConsultar
+        -JButton btnModificar
+        -JButton btnEliminar
+        -JButton btnLimpiar
+        -JButton btnSerializar
+        -JButton btnSalir
+        -JTable tablaMascotas
+        -DefaultTableModel modeloTabla
+        -JLabel lblMensaje
+        +VentanaPrincipal()
+        -inicializarComponentes() : void
+        -configurarVentana() : void
+        -organizarComponentes() : void
+        -crearPanelPrincipal() : JPanel
+        -crearPanelEntradaDatos() : JPanel
+        -crearPanelConsulta() : JPanel
+        -crearPanelBotones() : JPanel
+        -crearPanelResultados() : JPanel
+        +getNombreComun() : String
+        +getApodo() : String
+        +getClasificacion() : Clasificacion
+        +getFamilia() : String
+        +getGenero() : String
+        +getEspecie() : String
+        +getTipoAlimento() : TipoAlimento
+        +getConsultaApodo() : String
+        +getConsultaClasificacion() : Clasificacion
+        +getConsultaFamilia() : String
+        +getConsultaTipoAlimento() : TipoAlimento
+        +setDatosMascota(Mascota) : void
+        +limpiarCampos() : void
+        +actualizarTabla(List<Mascota>) : void
+        +getMascotaSeleccionada() : Mascota
+        +mostrarMensaje(String) : void
+        +registrarActionListener(ActionListener) : void
+    }
+    
+    class VentanaCompletarDatos {
+        -Mascota mascota
+        -boolean datosCompletados
+        -JTextField txtNombreComun
+        -JTextField txtApodo
+        -JComboBox<Clasificacion> cmbClasificacion
+        -JTextField txtFamilia
+        -JTextField txtGenero
+        -JTextField txtEspecie
+        -JComboBox<TipoAlimento> cmbTipoAlimento
+        -JButton btnAceptar
+        -JButton btnCancelar
+        +VentanaCompletarDatos(JFrame, Mascota)
+        -inicializarComponentes() : void
+        -configurarVentana() : void
+        -organizarComponentes() : void
+        -cargarDatosExistentes() : void
+        -aceptarDatos() : void
+        -cancelar() : void
+        +datosCompletados() : boolean
+        +getMascotaCompletada() : Mascota
+    }
+}
+
+package "udistrital.avanzada.veterinaria.controlador" {
+    class Controlador {
+        -VentanaPrincipal vista
+        -MascotaDAO mascotaDAO
+        -ServicioMascota servicioMascota
+        +Controlador(VentanaPrincipal)
+        +actionPerformed(ActionEvent) : void
+        -adicionarMascota() : void
+        -consultarMascotas() : void
+        -modificarMascota() : void
+        -eliminarMascota() : void
+        -limpiarCampos() : void
+        -serializarMascotas() : void
+        -salirAplicacion() : void
+        -cargarTodasLasMascotas() : void
+        -validarCamposObligatorios() : boolean
+        -crearMascotaDesdeVista() : Mascota
+        -escribirMascotaEnRAF(RandomAccessFile, Mascota) : void
+        -escribirStringRAF(RandomAccessFile, String) : void
+    }
+    
+    class Launcher {
+        +main(String[]) : void
+        -cargarMascotasIniciales(ServicioMascota) : void
+        -completarDatosIncompletos(List<Mascota>, ServicioMascota) : List<Mascota>
+        -inicializarInterfaz(MascotaDAO) : void
+    }
+}
+
+
+package "udistrital.avanzada.veterinaria.controlador" {
+    class ControladorTest {
+        -String APODO_TEST
+        -String APODO_TEST_2
+        -Controlador controlador
+        -VentanaPrincipal vista
+        -MascotaDAO mascotaDAO
+        -Mascota mascotaTest
+        +setUpAll() : void
+        +setUp() : void
+        +tearDown() : void
+        +tearDownAll() : void
+        +testAgregarMascotaExitosa() : void
+        +testAgregarMascotaDuplicada() : void
+        +testConsultarMascotaPorApodo() : void
+        +testConsultarMascotasPorClasificacion() : void
+        +testModificarMascota() : void
+        +testEliminarMascota() : void
+        +testValidarCamposObligatorios() : void
+        +testLimpiarCampos() : void
+        +testSerializarMascotas() : void
+        -configurarVistaConDatosMascota(Mascota) : void
+        -simularClickBoton(String) : void
+        -simularSeleccionEnTabla(Mascota) : void
+        -limpiarBaseDatos() : void
+        -limpiarArchivosPrueba() : void
+    }
+}
+
+' Relaciones entre clases
+Mascota --> Clasificacion : uses
+Mascota --> TipoAlimento : uses
+MascotaDAOImpl ..|> MascotaDAO : implements
+MascotaDAOImpl --> ConexionBD : uses
+MascotaDAOImpl --> Mascota : manages
+ConexionBD --> Mascota : creates table for
+ServicioMascota --> MascotaDAO : uses
+ServicioMascota --> Mascota : manages
+VentanaPrincipal --> Mascota : displays
+VentanaPrincipal --> Clasificacion : uses
+VentanaPrincipal --> TipoAlimento : uses
+VentanaCompletarDatos --> Mascota : manages
+VentanaCompletarDatos --> Clasificacion : uses
+VentanaCompletarDatos --> TipoAlimento : uses
+Controlador --> VentanaPrincipal : controls
+Controlador --> MascotaDAO : uses
+Controlador --> ServicioMascota : uses
+Controlador --> Mascota : manages
+Launcher --> MascotaDAO : uses
+Launcher --> ServicioMascota : uses
+Launcher --> Mascota : creates
+Launcher --> VentanaPrincipal : creates
+Launcher --> VentanaCompletarDatos : creates
+Launcher --> Controlador : creates
+ControladorTest --> Controlador : tests
+ControladorTest --> VentanaPrincipal : tests
+ControladorTest --> MascotaDAO : tests
+ControladorTest --> Mascota : tests
+
+' Notas sobre patrones de diseño
+note right of ConexionBD : Patrón Singleton
+note right of MascotaDAO : Patrón DAO
+note right of Controlador : Patrón MVC - Controlador
+note right of VentanaPrincipal : Patrón MVC - Vista
+note right of Mascota : Patrón MVC - Modelo
+
+@enduml
